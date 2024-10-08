@@ -311,6 +311,13 @@ class AsyncEth(BaseEth):
         RPC.eth_getTransactionByHash, mungers=[default_root_munger]
     )
 
+    async def generate_gas_price(
+        self, transaction_params: Optional[TxParams] = None
+    ) -> Optional[Wei]:
+        if self._gas_price_strategy:
+            return await self._gas_price_strategy(self.w3, transaction_params)
+        return None
+
     async def get_transaction(self, transaction_hash: _Hash32) -> TxData:
         return await self._get_transaction(transaction_hash)
 

@@ -295,6 +295,13 @@ class Eth(BaseEth):
         RPC.eth_getTransactionByHash, mungers=[default_root_munger]
     )
 
+    def generate_gas_price(
+        self, transaction_params: Optional[TxParams] = None
+    ) -> Optional[Wei]:
+        if self._gas_price_strategy:
+            return self._gas_price_strategy(self.w3, transaction_params)
+        return None
+
     def get_transaction(self, transaction_hash: _Hash32) -> TxData:
         return self._get_transaction(transaction_hash)
 

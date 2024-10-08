@@ -85,13 +85,6 @@ class BaseEth(Module):
 
         return (transaction,)
 
-    def generate_gas_price(
-        self, transaction_params: Optional[TxParams] = None
-    ) -> Optional[Wei]:
-        if self._gas_price_strategy:
-            return self._gas_price_strategy(self.w3, transaction_params)
-        return None
-
     def set_gas_price_strategy(
         self, gas_price_strategy: Optional[GasPriceStrategy]
     ) -> None:
